@@ -29,6 +29,12 @@ linked_list* insert(linked_list * head, int value){
 	return head;
 }
 
+linked_list* insert_at_beginning(linked_list * head, int value){
+	linked_list * node = create_node(value);
+	node->next = head;
+	return node;
+}
+
 void insert_after(linked_list * pos, int value){
 	linked_list * node = create_node(value);
 	node->next = pos->next;
@@ -93,3 +99,13 @@ void display(linked_list * head){
 	}
 	printf("\n");
 }
+
+linked_list * construct(int * value, int size){
+	linked_list * head = NULL;
+	while(size--){
+		head = insert(head,*(value++));
+	}
+	return head;
+}
+
+
