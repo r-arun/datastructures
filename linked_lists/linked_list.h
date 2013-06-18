@@ -108,4 +108,15 @@ linked_list * construct(int * value, int size){
 	return head;
 }
 
-
+int * cmd_to_int_arr(int argc, char * argv[]){
+	int * arr = NULL;
+	int size = argc - 1;	
+	if(size > 0){
+		arr = (int *) malloc(size * sizeof(int));
+		int i = 1;
+		for(; i <= size; ++i){
+			arr[i-1] = atoi(argv[i]);
+		}
+	}
+	return arr;
+}
