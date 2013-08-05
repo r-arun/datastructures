@@ -1,0 +1,64 @@
+You can use the sample program main.c to see how to use the create binary tree
+data structure. You must provide a file name which contains the following.
+
+Input Format:
+	The first line must contain an integer N, the number of nodes in the tree.
+	The second line must contain the pre-order traversal of nodes in the tree.
+	The third line must contain the in-order traversal of nodes in the tree.
+
+Conditions: 
+	1. number of nodes in the tree, N > 0.
+	2. The elements of a binary tree are all integers.
+	3. The elements of binary tree must be distinct.
+
+API:
+The code for binary tree construction and traversal is present in binary_tree.h.
+
+bin_tree * create_binary_tree(char * fname):
+	Takes the name of a file in fname, which contains the input as stated in
+	input format section. This returns the root node of the  binary tree that
+	corresponds to traversals in the input file.
+
+void preorder(bin_tree * root):
+	performs preorder traversal of the binary tree rooted at root.
+
+	The algorithm is as follows, for a non-empty tree rooted at root.
+	1. Visit/Print the data at root.
+	2. Recursively Traverse the left-subtree.
+	3. Recursively Traverse the right-subtree.
+
+	If sub-tree is empty, return to the caller.
+
+void inorder(bin_tree * root):
+	preforms inorder traversal of the binary tree rooted at root.
+
+	The algorithm is as follows, for a non-empty tree rooted at root.
+	1. Recursively Traverse the left-subtree.
+	2. Visit/Print the data at root.
+	3. Recursively Traverse the right-subtree.
+
+	If sub-tree is empty, return to the caller.
+
+void postorder(bin_tree * root):
+	preforms inorder traversal of the binary tree rooted at root.
+
+	The algorithm is as follows, for a non-empty tree rooted at root.
+	1. Recursively Traverse the left-subtree.
+	2. Recursively Traverse the right-subtree.
+	3. Visit/Print the data at root.
+
+	If sub-tree is empty, return to the caller.
+
+bst * insert(int * preorder, int * inorder, int start, int limit, int root_pos,
+							int size):
+	Given the preorder traversal in preorder and inorder traversal in inorder,
+	for a tree whose root is at position root_pos in preorder array and the valid
+	nodes in the tree are from start to limit-1 indices in inorder array, the
+	procedure constructs a valid binary and returns the root of the tree.
+
+Known Issues:
+	*insert/ create_binary_tree functions return a valid binary_tree only if the
+	traversals in the input file are valid. The order is also important, with
+	preorder followed by inorder in the input file.
+
+	*all the elements of binary tree must be distinct.

@@ -1,0 +1,13 @@
+1. Given the root node of a binary tree, return the number of elements in the
+binary tree. Look at count.c for a sample solution.
+
+2. Given the root node of a binary tree, return the height of the tree binary
+tree. Height of an empty tree/subtree is 0 and height of a node with only a
+root node is 1. Loot at height.c for a sample solution.
+
+3. Given the root node of a binary tree, find if the tree satisfies binary search
+tree properties.
+
+4. Given the root node of a binary tree, find the mirror of the binary tree.
+In the mirrored tree, all subtrees at their root have left and right subtree
+swapped.
