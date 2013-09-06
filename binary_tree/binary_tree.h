@@ -101,3 +101,119 @@ void random_array(int * pre_order, int * in_order,int start, int limit, int root
 		
 }
 */
+
+struct linked_list{
+	bin_tree * data;
+	struct linked_list * next;
+};
+
+typedef struct linked_list node;
+
+struct queue{
+	node * front;
+	node * rear;
+};
+
+struct queue * init_queue(){
+	struct queue * ret = (struct queue *)malloc(sizeof(struct queue));
+	if(!ret) return NULL;
+	ret->front = NULL;
+	ret->rear = NULL;
+	return ret;
+}
+
+node * create_node(bin_tree * value){
+	node * ret = (node *)malloc(sizeof(node));
+	if(!ret) return NULL;
+	ret->data = value;
+	ret->next = NULL;
+	return ret;
+}
+
+void enqueue(struct queue * q, bin_tree * value){
+	if(!q) return;
+	node * ret = create_node(value);
+	if(!ret) return;
+	if(!q->rear){
+		q->rear = q->front = ret;
+	}
+	else{
+		q->rear->next = ret;
+		q->rear = ret;
+	}
+}
+
+bin_tree * dequeue(struct queue * q){
+	assert(q && q->front);
+	bin_tree * val = q->front->data;
+	node * del = q->front;
+	if(q->rear == q->front){
+		q->rear = NULL;	
+	}
+	q->front = q->front->next;
+	free(del);
+	return val;
+}
+
+void print_queue(struct queue * q){
+	node * n = q->front;
+	printf("\n");
+	while(n){
+		if(n->data)
+			printf("%d\n", n->data->data);
+		else
+			printf("NULL\n");
+		n = n->next;
+	}
+	printf("End of Queue\n\n");
+}
+
+static test_tree_queue(struct queue *q, bin_tree * root){
+	enqueue(q, root);
+	if(!root)
+		return;
+	test_tree_queue(q, root->left);
+	test_tree_queue(q, root->right);
+}
+
+print_space(int space, int height){
+	space = space/height;
+	while(space--)
+		printf(" ");
+}
+
+void visualize(bin_tree *root){
+	if(!root){
+		puts("Empty Tree");
+	}
+	struct queue * exp = init_queue();	
+	struct queue * vis = init_queue();	
+	enqueue(exp, root);
+	int height = 0;
+	do{
+		++height;
+		assert(exp->rear != NULL);
+		printf("Queues %p %p\n", vis, exp);
+		struct queue * t = exp;
+		exp = vis;
+		vis = t;
+		//swap(&vis, &exp);
+		while(vis->front != NULL){
+			bin_tree * node = dequeue(vis);
+			if(node){
+				print_space(32, height);
+				printf("%3d ", node->data);
+				print_space(32/2, height);
+				enqueue(exp, node->left);
+				enqueue(exp, node->right);
+			}
+			else{
+				print_space(32, height);
+				printf("X");
+				print_space(32/2, height);
+			}
+		}
+		printf("\n");
+		assert(vis->rear == NULL);
+	}while(exp->front != NULL);
+}
