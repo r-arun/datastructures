@@ -104,6 +104,7 @@ void random_array(int * pre_order, int * in_order,int start, int limit, int root
 
 struct linked_list{
 	bin_tree * data;
+	int pos;
 	struct linked_list * next;
 };
 
@@ -122,17 +123,18 @@ struct queue * init_queue(){
 	return ret;
 }
 
-node * create_node(bin_tree * value){
+node * create_node(bin_tree * value,int pos){
 	node * ret = (node *)malloc(sizeof(node));
 	if(!ret) return NULL;
 	ret->data = value;
 	ret->next = NULL;
+	ret->pos = pos;
 	return ret;
 }
 
-void enqueue(struct queue * q, bin_tree * value){
+void enqueue(struct queue * q, bin_tree * value, int pos){
 	if(!q) return;
-	node * ret = create_node(value);
+	node * ret = create_node(value, pos);
 	if(!ret) return;
 	if(!q->rear){
 		q->rear = q->front = ret;
@@ -143,9 +145,9 @@ void enqueue(struct queue * q, bin_tree * value){
 	}
 }
 
-bin_tree * dequeue(struct queue * q){
+node * dequeue(struct queue * q){
 	assert(q && q->front);
-	bin_tree * val = q->front->data;
+	node * val = create_node(q->front->data, q->front->pos); 
 	node * del = q->front;
 	if(q->rear == q->front){
 		q->rear = NULL;	
@@ -169,17 +171,24 @@ void print_queue(struct queue * q){
 }
 
 static test_tree_queue(struct queue *q, bin_tree * root){
-	enqueue(q, root);
+	enqueue(q, root, 0);
 	if(!root)
 		return;
 	test_tree_queue(q, root->left);
 	test_tree_queue(q, root->right);
 }
 
-print_space(int space, int height){
-	space = space/height;
+void print_space(int space){
+if(space > 0)
 	while(space--)
 		printf(" ");
+}
+
+static int _height(bin_tree * root){
+	if(!root) return 0;
+	int left_height = _height(root->left);
+	int right_height = _height(root->right);
+	return left_height > right_height? left_height: right_height + 1;
 }
 
 void visualize(bin_tree *root){
@@ -188,32 +197,44 @@ void visualize(bin_tree *root){
 	}
 	struct queue * exp = init_queue();	
 	struct queue * vis = init_queue();	
-	enqueue(exp, root);
-	int height = 0;
+	enqueue(exp, root, 0);
+	int h= _height(root);
 	do{
-		++height;
 		assert(exp->rear != NULL);
-		printf("Queues %p %p\n", vis, exp);
 		struct queue * t = exp;
 		exp = vis;
 		vis = t;
+		print_space(1<<(h));
 		//swap(&vis, &exp);
+		int pos = 0;
 		while(vis->front != NULL){
-			bin_tree * node = dequeue(vis);
-			if(node){
-				print_space(32, height);
-				printf("%3d ", node->data);
-				print_space(32/2, height);
-				enqueue(exp, node->left);
-				enqueue(exp, node->right);
+			node * nd = dequeue(vis);
+			if(nd && nd->data){
+					//printf("Printing: %d, %d", pos, nd->pos);
+				while(pos < nd->pos){
+					print_space(1<<(h+1));
+					pos++;
+				}
+				bin_tree * _node = nd->data;
+				printf("%2d", _node->data);
+				print_space(1<<(h+1));
+				enqueue(exp, _node->left, nd->pos * 2 );
+				enqueue(exp, _node->right, nd->pos * 2 + 1);
 			}
-			else{
-				print_space(32, height);
+			else if(nd){
+					//printf("Printing: %d, %d", pos, nd->pos);
+				while(pos < nd->pos){
+					print_space(1<<(h+1));
+					printf(" ");
+					pos++;
+				}
 				printf("X");
-				print_space(32/2, height);
+				print_space(1<<(h+1));
 			}
+				pos++;
 		}
 		printf("\n");
 		assert(vis->rear == NULL);
+		h--;
 	}while(exp->front != NULL);
 }
