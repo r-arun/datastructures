@@ -19,8 +19,8 @@ int check_binary_search_tree(bin_tree * node){
 }
 
 int main(){
-	bin_tree * r1 = create_binary_tree("input");	
-	bin_tree * r2 = create_binary_tree("bst.in");
+	bin_tree * r1 = create_binary_tree("input/non-bst.in");	
+	bin_tree * r2 = create_binary_tree("input/bst.in");
 	//inorder(r1);
 	puts("");
 	printf("%d\n\n",check_binary_search_tree(r1));

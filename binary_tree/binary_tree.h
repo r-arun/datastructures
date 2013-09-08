@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <string.h>
 #include <limits.h>
 #include <time.h>
 
@@ -69,13 +70,46 @@ void postorder(bin_tree *root){
 	}
 }
 
+static void sort(int * input, int size){
+	int i, j;
+	for(i = 1; i < size; ++i){
+		if(input[i] < input[i-1]){
+			int new_val = input[i];
+			for(j = i-1; new_val < input[j] && j >= 0; --j){
+				input[j+1] = input[j];
+			}
+			input[j+1] = new_val;
+		}
+	}
+}
+
+static short test_input(int *pre_order, int * in_order, int size){
+	int * s1 = malloc(sizeof(int)* size);
+	int * s2 = malloc(sizeof(int)* size);
+	memcpy(s1, pre_order, size * sizeof(int)); 
+	memcpy(s2, in_order, size * sizeof(int)); 
+	sort(s1, size);
+	sort(s2, size);
+	int i;
+	for(i = 0; i < size; ++i){
+		if(s1[i] != s2[i])
+			return 0;
+	}
+	return 1;
+}
+
 bin_tree * create_binary_tree(char * fname){
-	int size;
-	if(size <= 0) return NULL;
+	short valid_input = 1;
 	FILE * fp = fopen(fname, "r");
+	if(!fp){
+		printf("File not found\n");
+		valid_input = 0;
+		goto end;
+	}
+	int size;
 	fscanf(fp,"%d", &size);	
-	int * pre_order = (int *)malloc(sizeof(bin_tree) *size);
-	int * in_order = (int *)malloc(sizeof(bin_tree) *size);
+	int * pre_order = (int *)malloc(sizeof(int) *size);
+	int * in_order = (int *)malloc(sizeof(int) *size);
 	int i = 0;
 	for(; i <size;++i){
 		fscanf(fp,"%d",&pre_order[i]);
@@ -84,10 +118,14 @@ bin_tree * create_binary_tree(char * fname){
 	for(; j <size;++j){
 		fscanf(fp,"%d",&in_order[j]);
 	}
+	valid_input = test_input(pre_order, in_order, size);
+	if(!valid_input) goto end;
 	fclose(fp);
 	bin_tree * root = insert(pre_order, in_order, 0, size, 0, size);
 	free(pre_order);
 	free(in_order);
+	end:
+		assert(valid_input);
 	return root;
 }
 
@@ -119,7 +157,6 @@ static int random_array(int * pre_order, int * in_order, int * mapping, int star
 	int root_pos = random_in_range(start, limit);	
 	in_order[root_pos] = pre_order[size] = random_int();
 	mapping[size] = root_pos;
-	printf("Put at position at %d %d\n", root_pos, in_order[root_pos]);
 	size = random_array(pre_order, in_order, mapping, start, root_pos, size+1);
 	return random_array(pre_order, in_order, mapping, root_pos + 1, limit, size);
 }
@@ -144,9 +181,9 @@ static bin_tree * insert_random_node(int * pre_order, int * in_order, int * mapp
 bin_tree * create_random_binary_tree(int size){
 	srand(time(NULL));
 	if(size <= 0) return NULL;
-	int * pre_order = (int *)malloc(sizeof(bin_tree) *size);
-	int * in_order = (int *)malloc(sizeof(bin_tree) *size);
-	int * mapping = (int *)malloc(sizeof(bin_tree) *size);
+	int * pre_order = (int *)malloc(sizeof(int) *size);
+	int * in_order = (int *)malloc(sizeof(int) *size);
+	int * mapping = (int *)malloc(sizeof(int) *size);
 	random_array(pre_order, in_order, mapping, 0, size, 0);
 	int i;
 	for(i = 0; i < size; ++i){

@@ -2,7 +2,8 @@ You can use the sample program eg1.c to see how to use the function
 create_binary_tree to create a binary tree.  You must provide a file
 name in the format described below. Also, create_random_binary_tree
 helps you to create a binary tree with random element values. You can
-look at eg2.c, for an example.
+look at eg2.c, for an example. You can use these files as a starting
+point for your solutions (see height.c and count.c).
 
 Input File Format:
 The input file must contain only 3 lines.
@@ -14,6 +15,8 @@ Conditions:
 	1. number of nodes in the tree, N > 0.
 	2. The elements of a binary tree are all integers.
 	3. The elements of binary tree must be distinct.
+	2 & 3 are major limitations, but you can construct trees with
+	duplicate elements using create_random_binary_tree.
 
 API:
 The code for binary tree construction and traversal is present in binary_tree.h.
