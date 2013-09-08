@@ -1,10 +1,14 @@
-You can use the sample program main.c to see how to use the create binary tree
-data structure. You must provide a file name which contains the following.
+You can use the sample program eg1.c to see how to use the function
+create_binary_tree to create a binary tree.  You must provide a file
+name in the format described below. Also, create_random_binary_tree
+helps you to create a binary tree with random element values. You can
+look at eg2.c, for an example.
 
-Input Format:
-	The first line must contain an integer N, the number of nodes in the tree.
-	The second line must contain the pre-order traversal of nodes in the tree.
-	The third line must contain the in-order traversal of nodes in the tree.
+Input File Format:
+The input file must contain only 3 lines.
+The first line must contain an integer N, number of nodes in the tree.
+The second line must contain the pre-order traversal of nodes.
+The third line must contain the in-order traversal of nodes.
 
 Conditions: 
 	1. number of nodes in the tree, N > 0.
@@ -15,50 +19,38 @@ API:
 The code for binary tree construction and traversal is present in binary_tree.h.
 
 bin_tree * create_binary_tree(char * fname):
-	Takes the name of a file in fname, which contains the input as stated in
-	input format section. This returns the root node of the  binary tree that
-	corresponds to traversals in the input file.
+	Takes the name of a file in fname, which contains the input as sta-
+	ted in input format section. This returns the root node of binary
+	tree that corresponds to traversals in the input file.
+
+bin_tree * create_random_binary_tree(int size):
+	Creates a binary tree with random node values, such that the
+	size of the tree equals 'size'. It returns the root of the tree
+	if size is valid or NULL if the size <= 0.
 
 void preorder(bin_tree * root):
 	performs preorder traversal of the binary tree rooted at root.
 
-	The algorithm is as follows, for a non-empty tree rooted at root.
-	1. Visit/Print the data at root.
-	2. Recursively Traverse the left-subtree.
-	3. Recursively Traverse the right-subtree.
-
-	If sub-tree is empty, return to the caller.
-
 void inorder(bin_tree * root):
-	preforms inorder traversal of the binary tree rooted at root.
-
-	The algorithm is as follows, for a non-empty tree rooted at root.
-	1. Recursively Traverse the left-subtree.
-	2. Visit/Print the data at root.
-	3. Recursively Traverse the right-subtree.
-
-	If sub-tree is empty, return to the caller.
+	performs inorder traversal of the binary tree rooted at root.
 
 void postorder(bin_tree * root):
-	preforms inorder traversal of the binary tree rooted at root.
+	performs inorder traversal of the binary tree rooted at root.
 
-	The algorithm is as follows, for a non-empty tree rooted at root.
-	1. Recursively Traverse the left-subtree.
-	2. Recursively Traverse the right-subtree.
-	3. Visit/Print the data at root.
-
-	If sub-tree is empty, return to the caller.
-
-bst * insert(int * preorder, int * inorder, int start, int limit, int root_pos,
-							int size):
-	Given the preorder traversal in preorder and inorder traversal in inorder,
-	for a tree whose root is at position root_pos in preorder array and the valid
-	nodes in the tree are from start to limit-1 indices in inorder array, the
-	procedure constructs a valid binary and returns the root of the tree.
+void pretty_print(bin_tree *root)
+	Prints the tree in the usual binary tree format. Works not so badly
+	for small trees (size upto 12). Does not work well for large
+	unbalanced trees.
 
 Known Issues:
-	*insert/ create_binary_tree functions return a valid binary_tree only if the
-	traversals in the input file are valid. The order is also important, with
-	preorder followed by inorder in the input file.
+	*create_binary_tree functions return a valid binary_tree 
+	only if the traversals in the input file are valid. The order is
+	also important, with preorder followed by inorder in the input
+	file.
 
-	*all the elements of binary tree must be distinct.
+IMPORTANT:
+	If the elements of binary tree are unique, the preorder and
+	inorder traversal gives raise to a unique binary tree, but it 
+	is not the case if there are duplicates. A tree returned by
+	create_random_binary_tree can have duplicates, but the algorithm
+	used in create_binary_tree fails for duplicates. 

@@ -8,5 +8,6 @@ int count(bin_tree * root){
 int main(int argc, char * argv[]){
 	int i;
 	bin_tree * root = create_binary_tree(argv[1]);
+	pretty_print(root);
 	printf("%d\n", count(root));
 }

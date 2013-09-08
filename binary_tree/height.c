@@ -15,4 +15,5 @@ int main(int argc, char * argv[]){
 	int i;
 	bin_tree * root = create_binary_tree(argv[1]);
 	printf("%d\n", height(root));
+	pretty_print(root);
 }
