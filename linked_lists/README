@@ -1,0 +1,57 @@
+The linked list implemented in this project is one whose state is represented
+by the head of the linked list, which ends with a NULL node. Though it is a
+popular variant in programming interviews, there are other representations
+that are helpful too.
+
+Here is the API. They do not assume any format of input, but there are helper
+methods that help you get the input from command line. It is definitely better
+to spend some time to develop the format that suits you.
+
+Any change in the list through an insertion or deletion requires that the new
+list be returned by the function. This might be slightly cumbersome. This
+piece of code may not be relevant beyond programming interview practice.
+
+API:
+void display(linked_list * head)
+	Given a head of a linked list, it prints the linked list from head to the
+	end of the list
+
+linked_list * construct(int * value, int size)
+	Given an integer array (or an equivalent container) and the size of the
+	array, it constructs a linked list from the 0th index till size-1 and 
+	returns the head of the linked list.
+
+	This is probably the function that you will use often alongise display.
+
+int *cmd_to_int_arr(int argc,char * argv[])
+	Given the command line parameters, with input representing a linked list,
+	it constructs an integer array, which can be passed through construct to
+	build a linked list.
+
+	You typically provide input to a program through the command line and
+	usually it is the entire linked list from head to the last element. In this
+	case the command line arguments should not include anything else and you
+	will pass the parameters as such to this function. It creates an integer
+	array and returns it to you.
+
+linked_list * remove_node(linked_list * head, int value)
+	Given the head node of a linked list, removes the first element with data
+	value - value and returns the head (possibly new head) of the resultant
+	linked list.
+
+int find(linked_list * head, int value)
+	Returns the 0-indexed position of the first linked list node with data value
+	- value.
+	Otherwise returns -1.
+
+void insert_after(linked_list * pos, int value)
+	Inserts an element into the linked list after the linked list node pointed
+	by pos.
+
+linked_list * insert_at_beginning(linked_list * head, value)
+	Given the head of a list, inserts an element at the beginning of a 
+	(possibly empty list) and returns the new head.
+
+linked_list * append(linked_list * head, value)
+	Given the head of a list, it appends an element to the end of the list and
+	returns the new head.

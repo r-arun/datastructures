@@ -7,14 +7,14 @@ struct llist{
 
 typedef struct llist linked_list;
 
-linked_list * create_node(int value){
+static linked_list * create_node(int value){
 	linked_list * node = (linked_list *)malloc(sizeof(linked_list));
 	node->data = value;
 	node->next = NULL;
 	return node;
 }
 
-linked_list* insert(linked_list * head, int value){
+linked_list* append(linked_list * head, int value){
 	//inserts an element at the end of a list
 	if(!head){
 		head = create_node(value);
@@ -36,14 +36,17 @@ linked_list* insert_at_beginning(linked_list * head, int value){
 }
 
 void insert_after(linked_list * pos, int value){
+	//Inserts the value of the node pointed by pos
 	linked_list * node = create_node(value);
 	node->next = pos->next;
 	pos->next = node;
 }
 
-int find_wrong(linked_list * head, int value){
-	//wrong assumption that malloc provides contiguous
-	//allocations
+static int find_wrong(linked_list * head, int value){
+	/*wrong assumption that malloc provides contiguous
+	*allocations
+	*Do not make it in your code, for this purpose
+	*/
 	linked_list * list = head;
 	while(list){
 		if(list->data == value) return list-head;
@@ -103,7 +106,7 @@ void display(linked_list * head){
 linked_list * construct(int * value, int size){
 	linked_list * head = NULL;
 	while(size--){
-		head = insert(head,*(value++));
+		head = append(head,*(value++));
 	}
 	return head;
 }
