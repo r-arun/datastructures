@@ -5,6 +5,10 @@ helps you to create a binary tree with random element values. You can
 look at eg2.c, for an example. You can use these files as a starting
 point for your solutions (see height.c and count.c).
 
+The focus is on easy testability and representation of the datastructure. 
+Pre-order, inorder traversals of the binary tree, with unique elements seemed
+to be a suitable representation for interview datastructures.
+
 Input File Format:
 The input file must contain only 3 lines.
 The first line must contain an integer N, number of nodes in the tree.
