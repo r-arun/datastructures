@@ -11,6 +11,9 @@ Any change in the list through an insertion or deletion requires that the new
 list be returned by the function. This might be slightly cumbersome. This
 piece of code may not be relevant beyond programming interview practice.
 
+Please look at reverse_linked_list.c and nth_from_last.c for sample usage of
+the API.
+
 API:
 void display(linked_list * head)
 	Given a head of a linked list, it prints the linked list from head to the
