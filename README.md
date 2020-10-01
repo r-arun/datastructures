@@ -16,9 +16,16 @@ preorder and inorder traversals to construct trees with *unique* elements in
 a file and construct a tree from that.
 
 You can also create binary trees with random node values, which you can
-use to test your binary tree code.
+use to test your binary tree code
 
 Take a look at *binary_tree/binary_tree.h* for the structure and other
+implementation details.
+
+You can also create a binary search tree where the left subtree contains values
+lesser than than the root node and right subtree contains values greater than the 
+root nodes
+
+Take a look at *binary_search_tree/binary_serach_tree.h* for the structure and other
 implementation details.
 
 This aims to make construction and testing easier, keeping the representat-
